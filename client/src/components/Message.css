@@ -1,0 +1,44 @@
+.message {
+    text-align: start;
+    font-size: 24px;
+    display: flex;
+    padding: 5px 15px 5px 10px;
+    width: fit-content;
+    margin: 5px;
+  }
+  
+  .message-text{
+    min-width: 75px;
+    max-width: 700px;
+  }
+  
+  #you {
+    border-radius: 0px 5px 5px 5px;
+    justify-content: end;
+    background: cornflowerblue;
+    color: white;
+  }
+  
+  #other {
+    border-radius: 5px 0px 5px 5px;
+    margin-left: auto;
+    margin-right: 5px;
+    background: steelblue;
+    color: #ffffff;
+  }
+  
+  #other #time {
+    text-align: end;
+  }
+  
+  #time {
+    font-size: 14px;
+    color: #d4d4d4;
+  }
+  
+  #author {
+    font-weight: bold;
+    color: #bed1ff;
+    text-align: end;
+    margin-bottom: 2px;
+  }

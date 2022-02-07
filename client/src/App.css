@@ -1,0 +1,75 @@
+.App {
+  background: linear-gradient(to bottom, cadetblue, #888888);
+  text-align: center;
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0%;
+  padding: 0%;
+}
+
+html {
+  height: 100%;
+}
+
+.login-page {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-username,
+.input-roomid {
+  padding: 10px;
+  margin: 5px 0;
+  font-size: 24px;
+}
+
+.button-join {
+  margin-top: 20px;
+  font-size: 24px;
+  padding: 10px;
+  background: #069406;
+}
+
+.button-join:hover {
+  cursor: pointer;
+  background: green;
+}
+
+.warning {
+  margin-top: 20px;
+  color: red;
+}
+
+.container {
+  display: flex;
+  height: 95%;
+  width: 95%;
+  margin: 0 20px;
+  padding-top: 10px;
+}
+
+.chat {
+  height: 100%;
+  width: 100%;
+  justify-content: end;
+  padding: 0px 200px 0px 200px;
+}
+
+.sidebar {
+  width: 600px;
+  height: 100%;
+}
+
+.sidebar-footer{
+padding: 5px 0;
+}

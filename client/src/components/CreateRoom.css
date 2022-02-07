@@ -1,0 +1,51 @@
+.CreateRoom {
+    padding: 5px 0;
+}
+
+.input-create-room {
+  padding: 5px;
+  margin: 5px 0;
+  margin-right: 3px;
+  font-size: 16px;
+}
+
+.container-add{
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-create {
+  background-color: #4e9e55;
+  width: 100%;
+  border: 1px solid black;
+  margin-top: 3px;
+  padding: 10px;
+}
+.button-create:hover, .button-submit-create:hover {
+  cursor: pointer;
+  background: #69b66f;
+}
+.button-create:active, .button-submit-create:active {
+  cursor: pointer;
+  background: #6dc275;
+}
+
+.button-submit-create {
+  background-color: #4e9e55;
+  padding: 5px 10px;
+  align-self: center;
+}
+
+.button-cancel-create {
+  background-color: #ec4343;
+  width: 100%;
+  padding: 5px;
+}
+.button-cancel-create:hover {
+  cursor: pointer;
+  background: #ff6f6f;
+}
+.button-cancel-create:active {
+  cursor: pointer;
+  background: #fd9797;
+}
