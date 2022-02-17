@@ -2,9 +2,9 @@ import "./App.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 import Chat from "./components/Chat";
-import Contacts from "./components/Contacts";
+import ContactsList from "./components/ContactsList";
 import JoinForm from "./components/JoinForm";
-import Rooms from "./components/Rooms";
+import RoomsList from "./components/RoomsList";
 import CreateRoom from "./components/CreateRoom";
 
 const socket = io.connect("http://localhost:3001");
@@ -18,33 +18,53 @@ function App() {
   const [rooms, setRooms] = useState([]);
   const [messages, setMessages] = useState([]);
   const [privateMessages, setPrivateMessages] = useState([]);
-  const [selectedContact, setSelectedContact] = useState({});
+  const [selectedContact, setSelectedContact] = useState();
 
   useEffect(() => {
+    addSockets();
+  }, []);
+
+  const addSockets = () => {
+    //Users
     socket.on("get_online_users", (onlineUsers) => {
       setOnlineUsers(onlineUsers.filter((user) => user.id !== socket.id));
     });
-
     socket.on("get_offline_users", (offlineUsers) => {
       setOfflineUsers([...new Set(offlineUsers)]);
     });
+    socket.on("recieve_online_user", (newUser) => {
+      setOnlineUsers((users) => [...users, newUser]);
+    });
+    socket.on("recieve_offline_user", (newUser) => {
+      setOfflineUsers((users) => [...users, newUser]);
+    });
+    socket.on("remove_online_user", (newUser, onlineUsers) => {
+      setOnlineUsers(
+        onlineUsers.filter(
+          (user) => user.id !== newUser.id && user.id !== socket.id
+        )
+      );
+    });
+    socket.on("remove_offline_user", (newUser, offlineUsers) => {
+      setOfflineUsers(offlineUsers.filter((user) => user.id !== newUser.id));
+    });
 
+    //Rooms
     socket.on("get_rooms", (rooms) => {
-      setRooms(rooms);
+      setRooms([...rooms]);
+    });
+    socket.on("get_new_room", (newRoom) => {
+      setRooms((rooms) => [...rooms, newRoom]);
     });
 
-    socket.on("get_new_room", (newRoomId) => {
-      setRooms((rooms) => [...rooms, newRoomId]);
-    });
-
+    //Messages
     socket.on("get_messages", (messages) => {
       setMessages(messages);
     });
-
     socket.on("get_private_messages", (privateMessages) => {
       setPrivateMessages(privateMessages);
     });
-  }, []);
+  };
 
   const handleUsernameCallback = (username) => {
     setUserName(username);
@@ -58,22 +78,20 @@ function App() {
     return false;
   };
 
-  const handleRoomSelect = (newRoomId) => {
-    setSelectedContact({});
-    setRoomId(newRoomId);
-    socket.emit("switch_room", roomId, newRoomId, userName);
+  const handleRoomSelect = (selectedRoom) => {
+    socket.emit("room_selected", roomId, selectedRoom.id, userName);
+    setSelectedContact();
+    setRoomId(selectedRoom.id);
   };
 
   const handleContactSelect = (contact) => {
+    roomId && socket.emit("leave_room", roomId, userName);
     setSelectedContact(contact);
     setRoomId("");
   };
 
-  const AddRoom = (newRoomId) => {
-    if (!rooms.includes(newRoomId)) {
-      setRooms((list) => [...list, newRoomId]);
-      socket.emit("create_room", newRoomId);
-    }
+  const AddRoom = (newRoom) => {
+    socket.emit("create_room", newRoom);
   };
 
   return (
@@ -88,30 +106,37 @@ function App() {
       ) : (
         <div className="container">
           <div className="sidebar">
-            <Contacts
-              username={userName}
+            <div className="contacts-header">Welcome {userName}!</div>
+            <ContactsList
               onlineUsers={onlineUsers}
               offlineUsers={offlineUsers}
               onContactSelect={handleContactSelect}
               selectedContact={selectedContact}
-            />
-          </div>
-          <div className="chat">
-            <Chat
               socket={socket}
-              userName={userName}
-              roomId={roomId}
-              selectedContact={selectedContact}
-              messages={messages}
-              privateMessages={privateMessages}
             />
           </div>
-          <div className="sidebar">
-            <Rooms
-              rooms={rooms}
-              onRoomSelect={handleRoomSelect}
-              selectedRoom={roomId}
-            />
+          {(roomId || selectedContact) && (
+            <div className="chat">
+              <Chat
+                socket={socket}
+                userName={userName}
+                roomId={roomId}
+                selectedContact={selectedContact}
+                messages={messages}
+                privateMessages={privateMessages}
+              />
+            </div>
+          )}
+          <div className="sidebar-rooms">
+            <div className="sidebar">
+              <RoomsList
+                socket={socket}
+                rooms={rooms}
+                onRoomSelect={handleRoomSelect}
+                selectedRoomId={roomId}
+                username={userName}
+              />
+            </div>
             <CreateRoom onAddRoom={AddRoom}></CreateRoom>
           </div>
         </div>

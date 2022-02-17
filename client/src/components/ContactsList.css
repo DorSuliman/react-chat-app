@@ -1,0 +1,64 @@
+.ContactsList {
+  height: 93%;
+  font-size: 18px;
+  overflow-y: auto;
+}
+
+.contacts-header {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  user-select: none;
+  margin-bottom: 20px;
+}
+
+.contact-list {
+  display: unset;
+  list-style: none;
+}
+
+.online-list-item {
+  background: cadetblue;
+  border: 1px solid black;
+  margin: 2px 15px;
+  padding: 5px 0px;
+}
+
+.online-list-item:hover {
+  background: #79b9bb;
+  cursor: pointer;
+}
+
+.online-list-item:active {
+  background: #457475;
+  cursor: pointer;
+}
+
+.offline-list-item {
+  background: #9e554e;
+  border: 1px solid black;
+  margin: 2px 15px;
+  padding: 5px 0px;
+}
+.offline-list-item:hover {
+  cursor: pointer;
+  background: #a16862;
+}
+.offline-list-item:active {
+  cursor: pointer;
+  background: #9e736e;
+}
+
+.selected-online {
+  background: #4e9e55;
+  border: 1px solid black;
+  margin: 2px 16px;
+  padding: 5px 0px;
+}
+
+.selected-offline {
+  background: #ca3b2e;
+  border: 1px solid black;
+  margin: 2px 16px;
+  padding: 5px 0px;
+}

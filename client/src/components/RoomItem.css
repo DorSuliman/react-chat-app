@@ -1,0 +1,62 @@
+.room-list-item {
+  display: unset;
+  list-style: none;
+}
+
+.room-item {
+  background: cadetblue;
+  border: 1px solid black;
+  margin: 3px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.room-item:hover {
+  background: #79b9bb;
+  cursor: pointer;
+}
+.room-item:active {
+  background: #457475;
+  cursor: pointer;
+}
+
+.selected-room-item {
+  background: #4e9e55;
+  border: 1px solid black;
+  margin: 3px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-users {
+  background: #4d4d4d;
+  color: white;
+  height: 100%;
+  margin: 0px 30px 10px 30px;
+  text-align: start;
+  width: 195px;
+}
+
+.room-id {
+  padding: 10px 10px;
+}
+
+.user-list-item .user-item {
+  border: 1px solid black;
+}
+
+.main-user-item {
+  background: #3d3d3d;
+}
+
+.show-users-icon {
+  background: darkslategray;
+  width: 25px;
+  border-radius: 10px;
+  color: white;
+  justify-content: end;
+  text-align: center;
+  user-select: none;
+  margin: 0px -15px;
+}

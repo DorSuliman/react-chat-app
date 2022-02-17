@@ -48,58 +48,58 @@ const Chat = ({
     setCurrentMessage("");
   };
   return (
-    (roomId || selectedContact) && (
-      <div className="Chat">
-        <div className="chat-header">
-          <h1>{roomId ? `Room :${roomId}` : selectedContact.name}</h1>
-        </div>
-        <div className="chat-body">
-          <ScrollToBottom className="message-container">
-            {roomId
-              ? messageList.map((messageData, index) => {
-                  if (messageData.roomId === roomId)
-                    return (
-                      <Message
-                        key={index}
-                        messageData={messageData}
-                        userName={userName}
-                      />
-                    );
-                  return null;
-                })
-              : privateMessageList.map((messageData, index) => {
-                  if (
-                    (messageData.author === selectedContact.name && messageData.contact.name === userName) ||
-                    (messageData.author === userName && messageData.contact.name === selectedContact.name)
-                  )
-                    return (
-                      <Message
-                        key={index}
-                        messageData={messageData}
-                        userName={userName}
-                      />
-                    );
-                  return null;
-                })}
-          </ScrollToBottom>
-        </div>
-        <div className="chat-footer">
-          <input
-            className="input-message"
-            value={currentMessage}
-            type="text"
-            placeholder="Hey..."
-            onChange={(e) => setCurrentMessage(e.target.value)}
-            onKeyPress={(event) => {
-              event.key === "Enter" && sendMessage();
-            }}
-          ></input>
-          <button className="button-send" onClick={sendMessage}>
-            &#10148;
-          </button>
-        </div>
+    <div className="Chat">
+      <div className="chat-header">
+        <h1>{roomId ? `Room: ${roomId}` : selectedContact.name}</h1>
       </div>
-    )
+      <div className="chat-body">
+        <ScrollToBottom className="message-container">
+          {roomId
+            ? messageList.map((messageData, index) => {
+                if (messageData.roomId === roomId)
+                  return (
+                    <Message
+                      key={index}
+                      messageData={messageData}
+                      userName={userName}
+                    />
+                  );
+                return null;
+              })
+            : privateMessageList.map((messageData, index) => {
+                if (
+                  (messageData.author === selectedContact.name &&
+                    messageData.contact.name === userName) ||
+                  (messageData.author === userName &&
+                    messageData.contact.name === selectedContact.name)
+                )
+                  return (
+                    <Message
+                      key={index}
+                      messageData={messageData}
+                      userName={userName}
+                    />
+                  );
+                return null;
+              })}
+        </ScrollToBottom>
+      </div>
+      <div className="chat-footer">
+        <input
+          className="input-message"
+          value={currentMessage}
+          type="text"
+          placeholder="Hey..."
+          onChange={(e) => setCurrentMessage(e.target.value)}
+          onKeyPress={(event) => {
+            event.key === "Enter" && sendMessage();
+          }}
+        ></input>
+        <button className="button-send" onClick={sendMessage}>
+          &#10148;
+        </button>
+      </div>
+    </div>
   );
 };
 

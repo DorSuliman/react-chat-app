@@ -6,10 +6,14 @@ const CreateRoom = ({ onAddRoom }) => {
   const [newRoomId, setNewRoomId] = useState("");
 
   const AddRoom = () => {
-    if (newRoomId !== "") {
-      onAddRoom(newRoomId);
+    if (newRoomId.trim() !== "") {
+      const newRoom = {
+        id: newRoomId,
+        users: [],
+      };
+      onAddRoom(newRoom);
       setNewRoomId("");
-      setShowCreate(false)
+      setShowCreate(false);
     }
   };
 

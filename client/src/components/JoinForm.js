@@ -9,12 +9,12 @@ const JoinForm = ({ socket, handleUsername, onJoin, userName }) => {
     setShowNameTakenWarning(false);
   }, [userName]);
 
-  const joinRoom = async () => {
-    if (userName !== "") {
+  const Join = async () => {
+    if (userName.trim() !== "") {
       if (onJoin()) socket.emit("join", userName);
       else setShowNameTakenWarning(true);
     }
-    if (userName === "") setShowNoNameWarning(true);
+    else setShowNoNameWarning(true);
   };
 
   return (
@@ -28,7 +28,7 @@ const JoinForm = ({ socket, handleUsername, onJoin, userName }) => {
         onChange={(e) => handleUsername(e.target.value)}
         maxLength={20}
       ></input>
-      <button className="button-join" onClick={joinRoom}>
+      <button className="button-join" onClick={Join}>
         Join
       </button>
       {showNoNameWarning && (

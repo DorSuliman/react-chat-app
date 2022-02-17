@@ -1,0 +1,6 @@
+.RoomsList {
+  height: 93%;
+  font-size: 18px;
+  overflow-y: auto;
+  padding: 0;
+}
