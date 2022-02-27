@@ -15,7 +15,7 @@
 }
 
 .button-create {
-  background-color: #4e9e55;
+  background-color: cadetblue;
   width: 100%;
   border: 1px solid black;
   margin-top: 3px;
@@ -23,15 +23,15 @@
 }
 .button-create:hover, .button-submit-create:hover {
   cursor: pointer;
-  background: #69b66f;
+  background: #6ca0a1;
 }
 .button-create:active, .button-submit-create:active {
   cursor: pointer;
-  background: #6dc275;
+  background: #73a2a3;
 }
 
 .button-submit-create {
-  background-color: #4e9e55;
+  background-color: cadetblue;
   padding: 5px 10px;
   align-self: center;
 }

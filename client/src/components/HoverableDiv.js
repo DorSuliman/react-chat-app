@@ -7,7 +7,7 @@ const HoverableDiv = (props) => {
       onMouseOver={props.onMouseOver}
       onMouseOut={props.onMouseOut}
     >
-     ? {props.children}
+      {props.children}
     </div>
   );
 };

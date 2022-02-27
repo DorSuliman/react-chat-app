@@ -1,11 +1,12 @@
 import React from "react";
+import "./ContactItem.css";
 
-const ContactItem = ({ index, isSelected, isOnline, onContactSelect, user }) => {
+const ContactItem = ({ index, isSelected, onContactSelect, user }) => {
   return (
     <li
       key={index}
       className={
-        isOnline
+        user.isOnline
           ? isSelected
             ? "selected-online"
             : "online-list-item"

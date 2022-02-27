@@ -1,0 +1,29 @@
+.user-list-item,
+.main-user-item {
+  border-bottom: 2px solid #666666;
+  padding: 3px 5px;
+}
+
+.main-user-item {
+  background: #3d3d3d;
+}
+
+.show-users-trigger {
+  color: white;
+  text-align: center;
+  user-select: none;
+  margin-right: 5px;
+  width: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.room-users {
+  background: #4d4d4d;
+  color: white;
+  height: 100%;
+  margin: 0px 30px 10px 30px;
+  text-align: start;
+  width: 195px;
+}

@@ -1,72 +1,65 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./Chat.css";
 import ScrollToBottom from "react-scroll-to-bottom";
 import Message from "./Message";
+import { addMessage, setCurrentMessage } from "../State/actions/messageActions";
+import { useDispatch, useSelector } from "react-redux";
 
-const Chat = ({
-  socket,
-  userName,
-  roomId,
-  selectedContact,
-  messages,
-  privateMessages,
-}) => {
-  const [currentMessage, setCurrentMessage] = useState("");
-  const [messageList, setMessageList] = useState(messages);
-  const [privateMessageList, setPrivateMessageList] = useState(privateMessages);
+const Chat = ({ socket }) => {
+  const dispatch = useDispatch();
+  const messages = useSelector((state) => state.allMessages);
+  const currentMessage = useSelector((state) => state.currentMessage);
+  const userName = useSelector((state) => state.userName);
+  const selectedRoom = useSelector((state) => state.selectedRoom);
+  const selectedContact = useSelector((state) => state.selectedContact);
 
   useEffect(() => {
-    socket.on("recieve_message", (messgeData) => {
-      setMessageList((list) => [...list, messgeData]);
-    });
-
-    socket.on("recieve_private_message", (messgeData) => {
-      setPrivateMessageList((list) => [...list, messgeData]);
+    socket.on("recieve_message", (messageData) => {
+      dispatch(addMessage(messageData));
     });
   }, []);
 
+  const getCurrentTimeString = () => {
+    let h = new Date(Date.now()).getHours();
+    let m = new Date(Date.now()).getMinutes();
+    h = h < 10 ? "0" + h : h;
+    m = m < 10 ? "0" + m : m;
+    return `${h}:${m}`;
+  };
+
   const sendMessage = () => {
-    if (currentMessage !== "" && (roomId || selectedContact)) {
+    if (
+      currentMessage.trim() !== "" &&
+      (selectedRoom.id || selectedContact.name)
+    ) {
       const MessgeData = {
-        roomId: roomId,
+        roomId: selectedRoom.id,
         contact: selectedContact,
         author: userName,
         message: currentMessage,
-        time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now()).getMinutes(),
+        time: getCurrentTimeString(),
       };
-      if (roomId) {
-        socket.emit("send_message", MessgeData);
-        setMessageList((list) => [...list, MessgeData]);
-      } else if (Object.keys(selectedContact).length !== 0) {
-        socket.emit("send_private_message", MessgeData);
-        setPrivateMessageList((list) => [...list, MessgeData]);
-      }
+      socket.emit("send_message", MessgeData);
+      dispatch(addMessage(MessgeData));
     }
-    setCurrentMessage("");
+    dispatch(setCurrentMessage(""));
   };
   return (
     <div className="Chat">
       <div className="chat-header">
-        <h1>{roomId ? `Room: ${roomId}` : selectedContact.name}</h1>
+        <h1>
+          {selectedRoom.id ? `Room: ${selectedRoom.id}` : selectedContact.name}
+        </h1>
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
-          {roomId
-            ? messageList.map((messageData, index) => {
-                if (messageData.roomId === roomId)
-                  return (
-                    <Message
-                      key={index}
-                      messageData={messageData}
-                      userName={userName}
-                    />
-                  );
+          {selectedRoom.id
+            ? messages.map((messageData, index) => {
+                if (messageData.roomId === selectedRoom.id)
+                  return <Message key={index} messageData={messageData} />;
                 return null;
               })
-            : privateMessageList.map((messageData, index) => {
+            : messages.map((messageData, index) => {
                 if (
                   (messageData.author === selectedContact.name &&
                     messageData.contact.name === userName) ||
@@ -77,7 +70,6 @@ const Chat = ({
                     <Message
                       key={index}
                       messageData={messageData}
-                      userName={userName}
                     />
                   );
                 return null;
@@ -89,14 +81,14 @@ const Chat = ({
           className="input-message"
           value={currentMessage}
           type="text"
-          placeholder="Hey..."
-          onChange={(e) => setCurrentMessage(e.target.value)}
+          placeholder="Message..."
+          onChange={(e) => dispatch(setCurrentMessage(e.target.value))}
           onKeyPress={(event) => {
             event.key === "Enter" && sendMessage();
           }}
         ></input>
         <button className="button-send" onClick={sendMessage}>
-          &#10148;
+          <i class="fas fa-share"></i>
         </button>
       </div>
     </div>

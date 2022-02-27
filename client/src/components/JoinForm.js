@@ -1,20 +1,34 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserName, showChat } from "../State/actions/userActions";
 
-const JoinForm = ({ socket, handleUsername, onJoin, userName }) => {
+const JoinForm = ({ socket }) => {
   const [showNoNameWarning, setShowNoNameWarning] = useState(false);
   const [showNameTakenWarning, setShowNameTakenWarning] = useState(false);
+
+  const dispatch = useDispatch();
+  const userName = useSelector((state) => state.userName);
+  const users = useSelector((state) => state.allUsers);
 
   useEffect(() => {
     setShowNoNameWarning(false);
     setShowNameTakenWarning(false);
   }, [userName]);
 
-  const Join = async () => {
-    if (userName.trim() !== "") {
-      if (onJoin()) socket.emit("join", userName);
-      else setShowNameTakenWarning(true);
+  const userExists = () => {
+    if (users.find((user) => user.name === userName.trim() && user.isOnline)) {
+      return true;
     }
-    else setShowNoNameWarning(true);
+    dispatch(showChat(true));
+    return false;
+  };
+
+  const Join = async () => {
+    dispatch(setUserName(userName.trim()));
+    if (userName.trim() !== "") {
+      if (!userExists()) socket.emit("join", userName.trim());
+      else setShowNameTakenWarning(true);
+    } else setShowNoNameWarning(true);
   };
 
   return (
@@ -25,18 +39,16 @@ const JoinForm = ({ socket, handleUsername, onJoin, userName }) => {
         type="text"
         placeholder="Name..."
         value={userName}
-        onChange={(e) => handleUsername(e.target.value)}
+        onChange={(e) => dispatch(setUserName(e.target.value))}
         maxLength={20}
       ></input>
       <button className="button-join" onClick={Join}>
         Join
       </button>
-      {showNoNameWarning && (
-        <div className="warning">Please enter your name</div>
-      )}
-      {showNameTakenWarning && (
-        <div className="warning">Name already taken</div>
-      )}
+      <div className="warning">
+        {showNoNameWarning && <div>Please enter your name</div>}
+        {showNameTakenWarning && <div>Name already taken</div>}
+      </div>
     </div>
   );
 };

@@ -4,59 +4,33 @@
 }
 
 .room-item {
-  background: cadetblue;
-  border: 1px solid black;
-  margin: 3px 15px;
+  border-bottom: 1px solid lightsteelblue;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .room-item:hover {
-  background: #79b9bb;
+  background: #6ca0a1;
   cursor: pointer;
 }
 .room-item:active {
-  background: #457475;
+  background: #73a2a3;
   cursor: pointer;
 }
 
+.top-room-item {
+  border-top: 1px solid lightsteelblue;
+}
+
 .selected-room-item {
-  background: #4e9e55;
-  border: 1px solid black;
-  margin: 3px 16px;
+  background: #5aa37f;
+  border-bottom: 1px solid lightsteelblue;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.room-users {
-  background: #4d4d4d;
-  color: white;
-  height: 100%;
-  margin: 0px 30px 10px 30px;
-  text-align: start;
-  width: 195px;
+  user-select: none;
 }
 
 .room-id {
   padding: 10px 10px;
-}
-
-.user-list-item .user-item {
-  border: 1px solid black;
-}
-
-.main-user-item {
-  background: #3d3d3d;
-}
-
-.show-users-icon {
-  background: darkslategray;
-  width: 25px;
-  border-radius: 10px;
-  color: white;
-  justify-content: end;
-  text-align: center;
-  user-select: none;
-  margin: 0px -15px;
 }

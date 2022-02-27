@@ -1,18 +1,17 @@
+import { useSelector } from "react-redux";
 import ContactItem from "./ContactItem";
 import "./ContactsList.css";
 
-const ContactsList = ({
-  onlineUsers,
-  offlineUsers,
-  onContactSelect,
-  selectedContact,
-}) => {
+const ContactsList = ({ onContactSelect }) => {
+  const users = useSelector((state) => state.allUsers);
+  const selectedContact = useSelector((state) => state.selectedContact);
+
   return (
     <div className="ContactsList">
       <ul className="contact-list">
         <div className="contacts-header">Online</div>
-        {onlineUsers.map((user, index) => {
-          if (user)
+        {users.map((user, index) => {
+          if (user.name && user.isOnline) {
             return (
               <ContactItem
                 key={index}
@@ -20,17 +19,17 @@ const ContactsList = ({
                 isSelected={
                   selectedContact ? selectedContact.name === user.name : false
                 }
-                isOnline={true}
                 onContactSelect={onContactSelect}
                 user={user}
               />
             );
+          }
         })}
       </ul>
       <ul className="contact-list">
         <div className="contacts-header">Offline</div>
-        {offlineUsers.map((user, index) => {
-          if (user.name)
+        {users.map((user, index) => {
+          if (user.name && !user.isOnline) {
             return (
               <ContactItem
                 key={index}
@@ -38,11 +37,11 @@ const ContactsList = ({
                 isSelected={
                   selectedContact ? selectedContact.name === user.name : false
                 }
-                isOnline={false}
                 onContactSelect={onContactSelect}
                 user={user}
               />
             );
+          }
           return null;
         })}
       </ul>

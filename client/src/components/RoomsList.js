@@ -1,14 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import RoomItem from "./RoomItem";
 import "./RoomsList.css";
 
-const RoomsList = ({
-  socket,
-  selectedRoomId,
-  rooms,
-  onRoomSelect,
-  username,
-}) => {
+const RoomsList = ({ onRoomSelect }) => {
+  const rooms = useSelector((state) => state.allRooms);
+  const selectedRoom = useSelector((state) => state.selectedRoom);
+
   return (
     <ul className="RoomsList">
       <div className="rooms-header">Rooms</div>
@@ -16,12 +14,10 @@ const RoomsList = ({
         return (
           <RoomItem
             key={index}
-            isSelected={selectedRoomId === room.id}
-            selectedRoomId={selectedRoomId}
+            index={index}
+            isSelected={selectedRoom.id === room.id}
             room={room}
             onRoomSelect={onRoomSelect}
-            username={username}
-            socket={socket}
           />
         );
       })}
