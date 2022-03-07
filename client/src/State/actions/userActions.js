@@ -12,6 +12,13 @@ export const setUserName = (userName) => {
   };
 };
 
+export const setPassword = (password) => {
+  return {
+    type: "SET_PASSWORD",
+    payload: password,
+  };
+};
+
 export const setSelectedContact = (contact) => {
   return {
     type: "SELECTED_CONTACT",

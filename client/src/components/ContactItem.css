@@ -1,10 +1,5 @@
 .online-list-item {
   background: cadetblue;
-  padding: 10px 15px;
-  border-bottom: 1px solid lightsteelblue;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .online-list-item:hover {
@@ -19,11 +14,6 @@
 
 .offline-list-item {
   background: #9e554e;
-  padding: 10px 15px;
-  border-bottom: 1px solid lightsteelblue;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 .offline-list-item:hover {
   cursor: pointer;
@@ -39,17 +29,17 @@
 }
 
 .selected-online {
-  padding: 10px 15px;
   background: #5aa37f;
-  border-bottom: 1px solid lightsteelblue;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  user-select: none;
 }
 
 .selected-offline {
   background: #c34b40;
+}
+
+.selected-offline,
+.selected-online,
+.offline-list-item,
+.online-list-item {
   padding: 10px 15px;
   border-bottom: 1px solid lightsteelblue;
   display: flex;

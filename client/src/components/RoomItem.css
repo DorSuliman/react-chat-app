@@ -1,9 +1,5 @@
-.room-list-item {
-  display: unset;
-  list-style: none;
-}
-
 .room-item {
+  background: cadetblue;
   border-bottom: 1px solid lightsteelblue;
   display: flex;
   justify-content: space-between;

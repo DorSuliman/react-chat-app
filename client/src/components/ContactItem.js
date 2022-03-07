@@ -4,7 +4,7 @@ import "./ContactItem.css";
 const ContactItem = ({ index, isSelected, onContactSelect, user }) => {
   return (
     <li
-      key={index}
+      key={index}      
       className={
         user.isOnline
           ? isSelected

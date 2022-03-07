@@ -23,63 +23,59 @@ var users = [];
 var rooms = [];
 var messages = [];
 
-const updateAllClients = (socket) => {
-  socket.emit("get_rooms", rooms);
+const updateClients = (socket) => {
   io.sockets.emit("get_users", users);
+  socket.emit("get_rooms", rooms);
   socket.emit("get_messages", messages);
 };
 
 io.on("connection", (socket) => {
-  console.log(socket.id, " connected");
   socket.emit("get_users", users);
-
+  
   //Connection
-  socket.on("join", (username) => {
+  socket.on("join", (username, password) => {
     socket.username = username;
+    socket.password = password;
     const onlineUser = {
       id: socket.id,
       name: username,
+      password: password,
       isOnline: true,
     };
     users = users.filter((user) => user.name !== username);
     users.push(onlineUser);
-    updateAllClients(socket);
+    updateClients(socket);
   });
 
   //Disconnection
   socket.on("disconnect", () => {
-    const offlineUser = {
-      id: socket.id,
-      name: socket.username,
-      isOnline: false,
-    };
-    users = users.filter((user) => user.name !== socket.username);
-    users.push(offlineUser);
-    socket.broadcast.emit("get_users", users);
-    rooms.forEach((room) => {
-      room.users = room.users.filter((user) => user.name !== socket.username);
+    users.map((user) => {
+      if (user.id === socket.id) user.isOnline = false;
     });
-    console.log(socket.username, " has disconnected");
+    rooms.map((room) => {
+      room.users = room.users.filter((user) => user.id !== socket.id);
+    });
+    socket.broadcast.emit("get_users", users);
+    socket.broadcast.emit("get_rooms", rooms);
   });
 
   //Rooms
-  socket.on("leave_room", (roomId, username) => {
-    rooms.forEach((room) => {
+  socket.on("leave_room", (roomId) => {
+    rooms.map((room) => {
       if (room.id === roomId) {
-        room.users = room.users.filter((user) => user.name !== username);
+        room.users = room.users.filter((user) => user.id !== socket.id);
       }
     });
     io.sockets.emit("get_rooms", rooms);
   });
-  socket.on("room_selected", (fromRoomId, toRoomId, username) => {
-    rooms.every((room) => {
+  socket.on("room_selected", (fromRoomId, toRoomId) => {
+    rooms.map((room) => {
       if (room.id === fromRoomId) {
-        room.users = room.users.filter((user) => user.name !== username);
+        room.users = room.users.filter((user) => user.id !== socket.id);
       }
-      room.id === toRoomId &&
-        !room.users.find((user) => user.name === username) &&
-        room.users.push({ id: socket.id, name: username, isOnline: true });
-      return true;
+      if (room.id === toRoomId) {
+        room.users.push(users.find((user) => user.id === socket.id));
+      }
     });
     io.sockets.emit("get_rooms", rooms);
   });

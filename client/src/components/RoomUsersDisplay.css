@@ -4,7 +4,17 @@
   padding: 3px 5px;
 }
 
-.main-user-item {
+.only-user-list-item {
+  border-bottom: 0px;
+  padding: 3px 5px;
+}
+.only-main-user-list-item {
+  border-bottom: 0px;
+  padding: 3px 5px;
+}
+
+.main-user-item,
+.only-main-user-list-item {
   background: #3d3d3d;
 }
 

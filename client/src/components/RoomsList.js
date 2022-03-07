@@ -9,7 +9,6 @@ const RoomsList = ({ onRoomSelect }) => {
 
   return (
     <ul className="RoomsList">
-      <div className="rooms-header">Rooms</div>
       {rooms.map((room, index) => {
         return (
           <RoomItem

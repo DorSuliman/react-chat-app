@@ -39,14 +39,14 @@ function App() {
   };
 
   const handleRoomSelect = (room) => {
-    socket.emit("room_selected", selectedRoom.id, room.id, userName);
+    socket.emit("room_selected", selectedRoom.id, room.id);
     selectedContact.name && dispatch(setSelectedContact());
     dispatch(setSelectedRoom(room));
   };
 
   const handleContactSelect = (contact) => {
     if (selectedRoom.id) {
-      socket.emit("leave_room", selectedRoom.id, userName);
+      socket.emit("leave_room", selectedRoom.id);
       dispatch(setSelectedRoom());
     }
     dispatch(setSelectedContact(contact));
@@ -74,6 +74,7 @@ function App() {
           )}
           <div className="sidebar-rooms">
             <div className="sidebar">
+              <div className="rooms-header">Rooms</div>
               <RoomsList onRoomSelect={handleRoomSelect} />
             </div>
             <CreateRoom onAddRoom={AddRoom}></CreateRoom>

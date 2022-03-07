@@ -88,7 +88,7 @@ const Chat = ({ socket }) => {
           }}
         ></input>
         <button className="button-send" onClick={sendMessage}>
-          <i class="fas fa-share"></i>
+          <i className="fas fa-share"></i>
         </button>
       </div>
     </div>

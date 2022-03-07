@@ -23,11 +23,28 @@ const RoomUsersDisplay = ({ room, isSelected }) => {
       <Hover type="hover">
         <div className="room-users">
           <div>
-            {isSelected && <div className="main-user-item">{username}</div>}
+            {isSelected && (
+              <div
+                className={
+                  room.users.length > 1
+                    ? "main-user-item"
+                    : "only-main-user-list-item"
+                }
+              >
+                {username}
+              </div>
+            )}
             {room.users.map(
               (user, index) =>
                 username !== user.name && (
-                  <div className="user-list-item" key={index}>
+                  <div
+                    className={
+                      room.users.length > 1
+                        ? "user-list-item"
+                        : "only-user-list-item"
+                    }
+                    key={index}
+                  >
                     {user.name}
                   </div>
                 )

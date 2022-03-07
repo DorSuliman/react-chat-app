@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import { currentMessageReducer, messageReducer } from "./messageReducer";
 import { roomIdReducer, roomReducer, selectedRoomReducer } from "./roomReducer";
 import {
+  passwordReducer,
   selectedContactReducer,
   showChatReducer,
   userNameReducer,
@@ -11,6 +12,7 @@ import {
 const reducers = combineReducers({
   showChat: showChatReducer,
   userName: userNameReducer,
+  password: passwordReducer,
   allUsers: userReducer,
   allRooms: roomReducer,
   newRoomId: roomIdReducer,

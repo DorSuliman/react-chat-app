@@ -3,8 +3,8 @@ import "./RoomItem.css";
 import RoomUsersDisplay from "./RoomUsersDisplay";
 
 const RoomItem = ({ index, room, onRoomSelect, isSelected }) => {
-  const render = () => {
-    return (
+  return (
+    <li>
       <div
         onClick={() => !isSelected && onRoomSelect(room)}
         className={`${isSelected ? "selected-room-item" : "room-item"} ${
@@ -14,9 +14,8 @@ const RoomItem = ({ index, room, onRoomSelect, isSelected }) => {
         <div className="room-id">{room.id}</div>
         <RoomUsersDisplay room={room} isSelected={isSelected} />
       </div>
-    );
-  };
-  return <li className="room-list-item"> {render()}</li>;
+    </li>
+  );
 };
 
 export default RoomItem;
